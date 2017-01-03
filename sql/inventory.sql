@@ -142,11 +142,51 @@ if(id = -1) then
 else
 	set @id=CONCAT("=",`id`);
 end if;
-set @query=CONCAT("select * from c_users where id ",@id," and status = 'active'");
+set @query=CONCAT("
+	select 
+		cu.name,clt.location_name,cut.user_type,cu.phone,cu.email,cu.created_date,cu.last_modified_date,cu.created_by,cu.modified_by 
+	from 
+		c_users cu,c_user_type cut,c_location_type clt
+	where 
+		cu.id ",@id," and status = 'active' and
+		cu.location_id = clt.id and
+		cu.user_type_id = cut.id");
 PREPARE stmt FROM @query;
 EXECUTE stmt;
 DEALLOCATE PREPARE stmt;
 /*end >get user details*/
+COMMIT;
+/*end >transaction*/
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `get_c_users_login` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `get_c_users_login` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_c_users_login`(`username` varchar(50),`password` varchar(50))
+BEGIN
+/*start >transaction*/
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+	ROLLBACK;
+	SHOW ERRORS LIMIT 1;
+END;
+START TRANSACTION;
+/*start >get user session*/
+select 
+	cu.name,clt.location_name,cut.user_type,cu.phone,cu.email,cu.created_date,cu.last_modified_date,cu.created_by,cu.modified_by 
+from 
+	c_users cu,c_user_type cut,c_location_type clt 
+where 
+	cu.username = `username` and 
+	cu.password = `password` and
+	cu.status = 'active' and
+	cu.location_id = clt.id and
+	cu.user_type_id = cut.id;
+/*end >get user session*/
 COMMIT;
 /*end >transaction*/
 END */$$
