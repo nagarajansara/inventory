@@ -41,6 +41,21 @@ CREATE TABLE `a_session` (
   `createddate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+/*Table structure for table `c_department` */
+
+DROP TABLE IF EXISTS `c_department`;
+
+CREATE TABLE `c_department` (
+  `id` int(5) NOT NULL AUTO_INCREMENT,
+  `department_name` varchar(50) NOT NULL,
+  `description` varchar(250) DEFAULT NULL,
+  `created_by` varchar(50) NOT NULL,
+  `modified_by` varchar(50) DEFAULT NULL,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 /*Table structure for table `c_location_type` */
 
 DROP TABLE IF EXISTS `c_location_type`;
@@ -54,6 +69,25 @@ CREATE TABLE `c_location_type` (
   `modified_by` int(5) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+/*Table structure for table `c_org_location` */
+
+DROP TABLE IF EXISTS `c_org_location`;
+
+CREATE TABLE `c_org_location` (
+  `id` varchar(50) NOT NULL,
+  `parent_id` varchar(50) NOT NULL,
+  `location_name` varchar(50) NOT NULL,
+  `locatioin_type_id` int(5) NOT NULL,
+  `phone` varchar(15) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `address` varchar(250) DEFAULT NULL,
+  `status` enum('active','inactive','trash') NOT NULL,
+  `created_by` varchar(50) NOT NULL,
+  `modified_by` varchar(50) DEFAULT NULL,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Table structure for table `c_session` */
 
@@ -105,6 +139,46 @@ CREATE TABLE `c_users` (
   KEY `FK_c_users>location_id>c_location_type>id` (`location_id`),
   KEY `FK_c_users>user_type_id>c_user_type>id` (`user_type_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+/*Table structure for table `co_product_list` */
+
+DROP TABLE IF EXISTS `co_product_list`;
+
+CREATE TABLE `co_product_list` (
+  `id` varchar(50) NOT NULL,
+  `parent_id` varchar(50) NOT NULL,
+  `product_name` varchar(250) NOT NULL,
+  `product_description` varchar(250) DEFAULT NULL,
+  `created_by` varchar(50) NOT NULL,
+  `modified_by` varchar(50) DEFAULT NULL,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Table structure for table `co_vendor` */
+
+DROP TABLE IF EXISTS `co_vendor`;
+
+CREATE TABLE `co_vendor` (
+  `id` varchar(50) NOT NULL,
+  `vendor_name` varchar(50) NOT NULL,
+  `company_name` varchar(50) NOT NULL,
+  `phone` varchar(15) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `pan_card` varchar(10) DEFAULT NULL,
+  `service_tax_no` varchar(50) DEFAULT NULL,
+  `fax` varchar(50) DEFAULT NULL,
+  `website` varchar(50) DEFAULT NULL,
+  `bank_name` varchar(50) DEFAULT NULL,
+  `account_no` varchar(50) DEFAULT NULL,
+  `ifsc_code` varchar(50) DEFAULT NULL,
+  `status` enum('active','inactive','trash') NOT NULL,
+  `created_by_location_id` varchar(50) NOT NULL,
+  `created_by` varchar(50) NOT NULL,
+  `modified_by` varchar(50) DEFAULT NULL,
+  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /* Procedure structure for procedure `c_session_delete` */
 
