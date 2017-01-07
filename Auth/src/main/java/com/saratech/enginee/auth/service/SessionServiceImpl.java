@@ -5,8 +5,7 @@
 package com.saratech.enginee.auth.service;
 
 import com.saratech.enginee.auth.dao.SessionDAO;
-import com.saratech.enginee.auth.model.Login;
-import java.util.List;
+import java.sql.SQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +19,7 @@ public class SessionServiceImpl implements SessionService {
     @Autowired
     SessionDAO loginDAO;
 
-    public List<Login> getLogin(String userName, String password) {
+    public String getLogin(String userName, String password) throws SQLException {
         return loginDAO.getLogin(userName, password);
     }
 }

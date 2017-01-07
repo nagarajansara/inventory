@@ -2,9 +2,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.saratech.enginee.auth.service;
+package com.saratech.enginee.ums.service;
 
-import java.sql.SQLException;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
  * @author Nagaraj
  */
 @Service
-public interface SessionService {
-
-    String getLogin(String userName, String password) throws SQLException;
+public interface ConfigService {
+    String add(String userType) throws Exception;
 }

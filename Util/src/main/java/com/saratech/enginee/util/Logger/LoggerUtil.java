@@ -4,7 +4,7 @@
  */
 package com.saratech.enginee.util.Logger;
 
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 /**
  *

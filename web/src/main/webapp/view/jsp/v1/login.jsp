@@ -110,7 +110,7 @@
             $(".hfmsSignInForm").submit(function( event ){
                 event.preventDefault();
                 var param = {
-                    "userName": $(".hfmsUserName").val(),
+                    "username": $(".hfmsUserName").val(),
                     "password": $(".hfmsPassword").val()
                 };
                 $(".hfmsErrorMsg").html('');
@@ -118,7 +118,7 @@
                     if(data && data.responseStatus == bmpUtil.RESPONSE_STATUS)
                     {
                         var contextPath = '${baseURL}';
-                        location.href = "http://"+ location.host + contextPath  +"/api/admin/get";
+                        location.href = "http://"+ location.host + contextPath  +"/view/jsp/v1/home.jsp";
                     }
                     else
                     {

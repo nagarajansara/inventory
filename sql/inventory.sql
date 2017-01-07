@@ -410,3 +410,153 @@ DELIMITER ;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+
+
+
+
+DELIMITER $$
+
+USE `inventory_erp`$$
+
+DROP PROCEDURE IF EXISTS `loginValidation`$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `loginValidation`(
+  IN username VARCHAR(100),
+   pass TEXT
+)
+BEGIN
+   SELECT id AS userid, username, pass, STATUS, createdat FROM a_login WHERE a_login.username=username 
+   AND a_login.pass = pass;
+ END$$
+
+DELIMITER ;
+
+
+
+DELIMITER $$
+
+USE `inventory_erp`$$
+
+DROP PROCEDURE IF EXISTS `insertSession`$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertSession`(IN userid INT(11),IN apikey TEXT)
+BEGIN
+    INSERT INTO a_session (userid,apikey) VALUES (userid ,apikey);
+ END$$
+
+DELIMITER ;
+
+
+DELIMITER $$
+
+USE `inventory_erp`$$
+
+DROP PROCEDURE IF EXISTS `c_user_type_post`$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `c_user_type_post`(IN ip_user_type VARCHAR(50))
+BEGIN
+/*start >transaction*/
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+	ROLLBACK;
+	SHOW ERRORS LIMIT 1;
+END;
+START TRANSACTION;
+/*start >add user*/
+	INSERT INTO c_user_type(
+		user_type,created_date) 
+	VALUES (
+		ip_user_type,NOW());
+SELECT 'SUCCESS' AS STATUS;
+/*end >add user*/
+COMMIT;
+/*end >transaction*/
+    END$$
+
+DELIMITER ;
+
+
+
+DELIMITER $$
+
+USE `inventory_erp`$$
+
+DROP PROCEDURE IF EXISTS `c_user_type_get`$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `c_user_type_get`()
+BEGIN
+/*start >transaction*/
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+	ROLLBACK;
+	SHOW ERRORS LIMIT 1;
+END;
+START TRANSACTION;
+/*start >add user*/
+	SELECT * FROM c_user_type;
+/*end >add user*/
+COMMIT;
+/*end >transaction*/
+    END$$
+
+DELIMITER ;
+
+
+DELIMITER $$
+
+USE `inventory_erp`$$
+
+DROP PROCEDURE IF EXISTS `c_user_type_delete`$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `c_user_type_delete`(IN ip_id INT(5))
+BEGIN
+/*start >transaction*/
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+	ROLLBACK;
+	SHOW ERRORS LIMIT 1;
+END;
+START TRANSACTION;
+DELETE FROM c_user_type WHERE id = ip_id;
+SELECT 'SUCCESS';
+COMMIT;
+/*end >transaction*/
+    END$$
+
+DELIMITER ;
+
+
+DELIMITER $$
+
+USE `inventory_erp`$$
+
+DROP PROCEDURE IF EXISTS `c_user_type_put`$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `c_user_type_put`(IN ip_id INT(5),IN ip_user_type VARCHAR(50))
+BEGIN
+/*start >transaction*/
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+	ROLLBACK;
+	SHOW ERRORS LIMIT 1;
+END;
+START TRANSACTION;
+/*start >update user details*/
+UPDATE 
+	`c_user_type` 
+SET 
+	`user_type`=`ip_user_type`
+WHERE 
+	`id`=`ip_id`;
+/*end >update user details*/
+COMMIT;
+SELECT 'SUCCESS';
+/*end >transaction*/
+    END$$
+
+DELIMITER ;
+
+
+
+
+

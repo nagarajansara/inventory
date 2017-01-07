@@ -4,12 +4,10 @@
  */
 package com.saratech.enginee.web.authcontroller;
 
-import com.saratech.enginee.auth.controller.SessionController;
+import com.saratech.enginee.ums.controller.UserConfigController;
 import com.saratech.enginee.util.Logger.LoggerUtil;
 import com.saratech.enginee.util.Utilities.Utilities;
-import com.saratech.enginee.util.exception.ConstException;
 import com.saratech.enginee.util.response.Response;
-import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,29 +23,26 @@ import org.springframework.web.bind.annotation.RestController;
  * @author Nagaraj
  */
 @Controller
-@RequestMapping("web")
+@RequestMapping("config")
 @RestController
-public class WebSessionController {
+public class WebConfigController {
 
     @Autowired
-    SessionController sessionController;
-    String className = WebSessionController.class.getName();
+    UserConfigController userConfigController;
+    String className = WebConfigController.class.getName();
 
-    @RequestMapping(value = "/session", method = {RequestMethod.POST})
+    @RequestMapping(value = "/add", method = {RequestMethod.POST})
     public Response session(HttpServletRequest request, HttpServletResponse res,
-            @RequestParam(value = "username", required = false) String userName,
-            @RequestParam(value = "password", required = false) String password,
+            @RequestParam(value = "usertype") String userType,
             ModelMap model) throws Exception {
         Response response = new Response();
         try {
-            LoggerUtil.getDebugLog().debug(className + " " + "username = " + userName);
-            LoggerUtil.getDebugLog().debug(className + " " + "password = " + password);
-            String responseData = sessionController.getLogin(request, userName, password);
-            LoggerUtil.getDebugLog().debug(className + " " + "responseData = " + responseData);
-            Utilities.setSuccessResponse(response, responseData);
+            LoggerUtil.getDebugLog().debug(className + " " + "usertype = " + userType);
+            String responseMsg = userConfigController.add(userType);
+            Utilities.setSuccessResponse(response, responseMsg);
         } catch (Exception ex) {
-            LoggerUtil.getErrorLog().error(className + " " + ex.getMessage());
-            LoggerUtil.getDebugLog().debug(className + " " + ex.getMessage());
+            LoggerUtil.getDebugLog().debug(className + " " + "usertype = " + ex.getMessage());
+            LoggerUtil.getErrorLog().error(className + " " + "usertype = " + ex.getMessage());
             Utilities.setErrResponse(ex, response);
         }
         return response;
