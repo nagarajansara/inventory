@@ -10,7 +10,7 @@ function CtDAO() {
     this.API_PREFIX = this.HTTP_URL_PREFIX + "api";
 
     this.LOGIN_VALIDATE = this.API_PREFIX + "/web/session.json";
-    this.ADD_USER_TYPE = this.API_PREFIX + "/web/configadd.json";
+    this.ADD_USER_TYPE = this.API_PREFIX + "/config/addusertype.json";
     
     this.RESPONSE_CACHE = {};
 

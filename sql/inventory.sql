@@ -392,68 +392,13 @@ SELECT 'SUCCESS';
     END */$$
 DELIMITER ;
 
-/* Procedure structure for procedure `loginValidation` */
+/* Procedure structure for procedure `c_user_type_delete` */
 
-/*!50003 DROP PROCEDURE IF EXISTS  `loginValidation` */;
-
-DELIMITER $$
-
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `loginValidation`(
-  IN username VARCHAR(100),
-   pass TEXT
-)
-BEGIN
-   SELECT * FROM a_login WHERE a_login.username=username 
-   AND a_login.pass = pass;
- END */$$
-DELIMITER ;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-
-
-
+/*!50003 DROP PROCEDURE IF EXISTS  `c_user_type_delete` */;
 
 DELIMITER $$
 
-USE `inventory_erp`$$
-
-DROP PROCEDURE IF EXISTS `loginValidation`$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `loginValidation`(
-  IN username VARCHAR(100),
-   pass TEXT
-)
-BEGIN
-   SELECT id AS userid, username, pass, STATUS, createdat FROM a_login WHERE a_login.username=username 
-   AND a_login.pass = pass;
- END$$
-
-DELIMITER ;
-
-
-
-DELIMITER $$
-
-USE `inventory_erp`$$
-
-DROP PROCEDURE IF EXISTS `insertSession`$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `insertSession`(IN userid INT(11),IN apikey TEXT)
-BEGIN
-    INSERT INTO a_session (userid,apikey) VALUES (userid ,apikey);
- END$$
-
-DELIMITER ;
-
-
-DELIMITER $$
-
-USE `inventory_erp`$$
-
-DROP PROCEDURE IF EXISTS `c_user_type_post`$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `c_user_type_post`(IN ip_user_type VARCHAR(50))
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `c_user_type_delete`(IN ip_id INT(5))
 BEGIN
 /*start >transaction*/
 DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -462,28 +407,20 @@ BEGIN
 	SHOW ERRORS LIMIT 1;
 END;
 START TRANSACTION;
-/*start >add user*/
-	INSERT INTO c_user_type(
-		user_type,created_date) 
-	VALUES (
-		ip_user_type,NOW());
-SELECT 'SUCCESS' AS STATUS;
-/*end >add user*/
+DELETE FROM c_user_type WHERE id = ip_id;
+SELECT 'SUCCESS';
 COMMIT;
 /*end >transaction*/
-    END$$
-
+    END */$$
 DELIMITER ;
 
+/* Procedure structure for procedure `c_user_type_get` */
 
+/*!50003 DROP PROCEDURE IF EXISTS  `c_user_type_get` */;
 
 DELIMITER $$
 
-USE `inventory_erp`$$
-
-DROP PROCEDURE IF EXISTS `c_user_type_get`$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `c_user_type_get`()
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `c_user_type_get`()
 BEGIN
 /*start >transaction*/
 DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -497,42 +434,43 @@ START TRANSACTION;
 /*end >add user*/
 COMMIT;
 /*end >transaction*/
-    END$$
-
+    END */$$
 DELIMITER ;
 
+/* Procedure structure for procedure `c_user_type_post` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `c_user_type_post` */;
 
 DELIMITER $$
 
-USE `inventory_erp`$$
-
-DROP PROCEDURE IF EXISTS `c_user_type_delete`$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `c_user_type_delete`(IN ip_id INT(5))
-BEGIN
-/*start >transaction*/
-DECLARE EXIT HANDLER FOR SQLEXCEPTION
-BEGIN
-	ROLLBACK;
-	SHOW ERRORS LIMIT 1;
-END;
-START TRANSACTION;
-DELETE FROM c_user_type WHERE id = ip_id;
-SELECT 'SUCCESS';
-COMMIT;
-/*end >transaction*/
-    END$$
-
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `c_user_type_post`(IN ip_user_type VARCHAR(50))
+BEGIN
+/*start >transaction*/
+DECLARE EXIT HANDLER FOR SQLEXCEPTION
+BEGIN
+	ROLLBACK;
+	SHOW ERRORS LIMIT 1;
+END;
+START TRANSACTION;
+/*start >add user*/
+	INSERT INTO c_user_type(
+		user_type,created_date) 
+	VALUES (
+		ip_user_type,NOW());
+SELECT 'SUCCESS' AS STATUS;
+/*end >add user*/
+COMMIT;
+/*end >transaction*/
+    END */$$
 DELIMITER ;
 
+/* Procedure structure for procedure `c_user_type_put` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `c_user_type_put` */;
 
 DELIMITER $$
 
-USE `inventory_erp`$$
-
-DROP PROCEDURE IF EXISTS `c_user_type_put`$$
-
-CREATE DEFINER=`root`@`localhost` PROCEDURE `c_user_type_put`(IN ip_id INT(5),IN ip_user_type VARCHAR(50))
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `c_user_type_put`(IN ip_id INT(5),IN ip_user_type VARCHAR(50))
 BEGIN
 /*start >transaction*/
 DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -552,11 +490,36 @@ WHERE
 COMMIT;
 SELECT 'SUCCESS';
 /*end >transaction*/
-    END$$
-
+    END */$$
 DELIMITER ;
 
+/* Procedure structure for procedure `insertSession` */
 
+/*!50003 DROP PROCEDURE IF EXISTS  `insertSession` */;
 
+DELIMITER $$
 
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `insertSession`(IN ip_user_id int(11),IN ip_apikey text)
+BEGIN
+	insert into a_session(userid,apikey) values(ip_user_id,ip_apikey);
+    END */$$
+DELIMITER ;
 
+/* Procedure structure for procedure `loginValidation` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `loginValidation` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `loginValidation`(
+  IN username VARCHAR(100),
+   pass TEXT
+)
+BEGIN
+   SELECT id as 'userid',username,pass,status,createdat,lastlogin,lastlogout FROM a_login WHERE a_login.username=username 
+   AND a_login.pass = pass;
+ END */$$
+DELIMITER ;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

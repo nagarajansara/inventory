@@ -31,7 +31,7 @@ public class WebConfigController {
     UserConfigController userConfigController;
     String className = WebConfigController.class.getName();
 
-    @RequestMapping(value = "/add", method = {RequestMethod.POST})
+    @RequestMapping(value = "/addusertype", method = {RequestMethod.POST})
     public Response session(HttpServletRequest request, HttpServletResponse res,
             @RequestParam(value = "usertype") String userType,
             ModelMap model) throws Exception {

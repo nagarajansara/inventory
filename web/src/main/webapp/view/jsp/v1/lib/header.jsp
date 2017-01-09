@@ -23,7 +23,7 @@
         <meta name="author" content="ThemeBucket">
         <link rel="shortcut icon" href="images/favicon.png">
 
-        <title>Hostel ERP</title>
+        <title>Inventory ERP</title>
 
         <!--Core CSS -->
         <link href="${baseURL}/theme/bs3/css/bootstrap.min.css" rel="stylesheet">
@@ -65,7 +65,7 @@
                     <a href="index.html" class="logo"
                        style="color: #fff; font-family: verdana; font-size: 23px; font-weight: bold;">
                         <!-- <img
-                        src="${baseURL}/theme/images/logo.png" alt=""> --> Hostel ERP
+                        src="${baseURL}/theme/images/logo.png" alt=""> --> Inventory
                     </a>
                     <div class="sidebar-toggle-box">
                         <div class="fa fa-bars"></div>

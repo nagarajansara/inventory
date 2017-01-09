@@ -18,7 +18,7 @@
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
-         <dependency>
+        <dependency>
             <groupId>com.saratech.enginee</groupId>
             <artifactId>Util</artifactId>
             <version>${project.version}</version>
@@ -53,11 +53,16 @@
             <version>20160212</version>
             <type>jar</type>
         </dependency>
-        <dependency>
+        <!--        <dependency>
             <groupId>jackson-mapper-asl.com</groupId>
             <artifactId>jacksonmapperasl</artifactId>
             <version>1.7.1</version>
             <type>jar</type>
+        </dependency>-->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.7.1</version>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
