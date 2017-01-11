@@ -13,7 +13,7 @@
                         <li><a href="/inventory/view/jsp/v1/usertype.jsp">UserType</a></li> 
                         <li><a href="/inventory/view/jsp/v1/location.jsp">Location</a></li> 
                         <li><a href="/inventory/view/jsp/v1/locationtype.jsp">LocationType</a></li> 
-                        <li><a href="/inventory/view/jsp/v1/locationtype.jsp">Product Category</a></li> 
+                        <li><a href="/inventory/view/jsp/v1/product.jsp">Product Category</a></li> 
                         <li><a href="/inventory/view/jsp/v1/locationtype.jsp">Vendor</a></li> 
                         <li><a href="/inventory/view/jsp/v1/locationtype.jsp">Trade</a></li>
                     </ul>

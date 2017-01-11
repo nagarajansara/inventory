@@ -13,4 +13,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ConfigService {
     String add(String userType) throws Exception;
+    String addUser(String user,String name,String password,String locationId,String userTypeId,String phone,String email,String createdBy) throws Exception;
 }

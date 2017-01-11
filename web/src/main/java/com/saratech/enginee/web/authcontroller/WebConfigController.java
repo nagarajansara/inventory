@@ -46,6 +46,30 @@ public class WebConfigController {
             Utilities.setErrResponse(ex, response);
         }
         return response;
-
+    }
+    
+    @RequestMapping(value = "/adduser", method = {RequestMethod.POST})
+    public Response addUser(HttpServletRequest request, HttpServletResponse res,
+            @RequestParam(value = "usertype") String user,
+            @RequestParam(value = "name") String name,
+            @RequestParam(value = "username") String userName,
+            @RequestParam(value = "password") String password,
+            @RequestParam(value = "locationid") String locationId,
+            @RequestParam(value = "usertypeid") String usertypeId,
+            @RequestParam(value = "phone") String phone,
+            @RequestParam(value = "email") String email,
+            @RequestParam(value = "createdby") String createdBy,
+            ModelMap model) throws Exception {
+        Response response = new Response();
+        try {
+            LoggerUtil.getDebugLog().debug(className + " " + "user = " + user);
+            String responseMsg = userConfigController.addUser(user,name,password,locationId,usertypeId,phone,email,createdBy);
+            Utilities.setSuccessResponse(response, responseMsg);
+        } catch (Exception ex) {
+            LoggerUtil.getDebugLog().debug(className + " " + "user = " + ex.getMessage());
+            LoggerUtil.getErrorLog().error(className + " " + "user = " + ex.getMessage());
+            Utilities.setErrResponse(ex, response);
+        }
+        return response;
     }
 }

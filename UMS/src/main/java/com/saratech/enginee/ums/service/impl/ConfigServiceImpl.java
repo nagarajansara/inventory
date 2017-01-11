@@ -23,4 +23,8 @@ public class ConfigServiceImpl implements ConfigService{
         return configDAO.add(userType);
     }
     
+    public String addUser(String user,String name,String password,String locationId,String userTypeId,String phone,String email,String createdBy) throws Exception {
+        return configDAO.addUser(user,name,password,locationId,userTypeId,phone,email,createdBy);
+    }
+    
 }

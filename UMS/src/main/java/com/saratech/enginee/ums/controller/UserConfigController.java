@@ -21,4 +21,8 @@ public class UserConfigController {
     public String add(String userType) throws Exception {
         return configService.add(userType);
     }
+    
+    public String addUser(String user,String name,String password,String locationId,String userTypeId,String phone,String email,String createdBy) throws Exception {
+        return configService.addUser(user,name,password,locationId,userTypeId,phone,email,createdBy);
+    }
 }

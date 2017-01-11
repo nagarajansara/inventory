@@ -5,7 +5,7 @@
         <div class="row hfmsShowStudentDataRow">
             <div class="col-md-12">
                 <section class="panel">
-                    <header class="panel-heading"> Location List</header>
+                    <header class="panel-heading"> Product List</header>
                     <button type="button" class="btn btn-success hfmsAddNewBtn">ADD
                         NEW</button>
                     <div class="panel-body">
@@ -14,10 +14,8 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Location name</th>
-                                    <th>Location type<th>
-                                    <th>Phone</th>
-                                    <th>Email</th>
+                                    <th>Product Name</th>
+                                    <th>Parent</th>
                                 </tr>
                             </thead>
                         </table>
@@ -31,27 +29,17 @@
         <div class="row hfmsAddRow" style="display: none">
             <div class="col-md-12">
                 <section class="panel">
-                    <header class="panel-heading"> Location Details </header>
+                    <header class="panel-heading"> Product Details </header>
                     <button type="button" class="btn btn-success hfmsShowUsresBut">Show
-                        Location</button>
+                        Product</button>
                     <div class="panel-body">
                         <div class="position-center">
                             <form role="form" class="hrfsSubmitCollegeForm"
                                   data-parsley-validate="">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Location Name</label> <input
+                                    <label for="exampleInputEmail1">Product Name</label> <input
                                         type="text" class="form-control hfmsCollegeName"
-                                        placeholder="Location Name" jsonKey="name" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Mobile No</label> <input
-                                        type="text" class="form-control hfmsMobileNo"
-                                        placeholder="Mobile No" jsonKey="mobileno" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Mail</label> <input
-                                        type="text" class="form-control hfmsMobileNo"
-                                        placeholder="Mail" jsonKey="mobileno" required>
+                                        placeholder="Product Name" jsonKey="name" required>
                                 </div>
                                 <button class="btn btn-primary" type="submit">Submit</button>
                                 <img class="hfmsLoader" src="/hostelerp/assest/img/index.gif" />
@@ -67,35 +55,17 @@
         <div class="row hfmsUpdateRow" style="display: none">
             <div class="col-md-12">
                 <section class="panel">
-                    <header class="panel-heading"> Location Details </header>
+                    <header class="panel-heading"> Product Details </header>
                     <button type="button" class="btn btn-success hfmsShowUsresBut">Show
-                        Location</button>
+                        Product</button>
                     <div class="panel-body">
                         <div class="position-center">
                             <form role="form" class="hrfsUpdateCollegeForm"
                                   data-parsley-validate="">
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Location Name</label> <input
+                                    <label for="exampleInputEmail1">Product Name</label> <input
                                         type="text" class="form-control hfmsUpdateCollegeName"
-                                        placeholder="Student Name" jsonKey="name" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Mobile No</label> <input
-                                        type="text" class="form-control hfmsUpdateMobileNo"
-                                        placeholder="Mobile No" jsonKey="mobileno" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Address</label>
-                                    <textarea rows="6" class="form-control hfmsUpdateCollegeAddress"
-                                              required jsonKey="address"></textarea>
-                                </div>
-                                <div class="form-group hfmsCityParent"></div>
-                                <div class="form-group hfmsStateParent"></div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Select Country</label> <select
-                                        class="form-control m-bot15 hfmsUpdateCountry hfmsCommonCollegeSelectize"  placeholder="Select Country" data-parsley-required jsonKey="country">
-                                        <option value="india">India</option>
-                                    </select>
+                                        placeholder="Product Name" jsonKey="name" required>
                                 </div>
                                 <input type="hidden" jsonKey="id" class="hfmsUpdateCollegeId">
                                 <button class="btn btn-primary" type="submit">Update</button>
@@ -108,7 +78,7 @@
         </div>
         <!-- UPDATE USER FORM  END -->
     </section>
-</section>
+</section> 
 <%@ include file="lib/footer.jsp"%>
 <script src="${baseURL}/assest/plugin/cfdatatable.js"></script>
 <script src="${baseURL}/assest/plugin/selecttwo/select_min.js"></script>
@@ -120,7 +90,7 @@
         $(".iv_AddUserType").submit(function(event) {
             event.preventDefault();
             var param = {
-              "usertype": $(".iv_userType").val()  
+                "usertype": $(".iv_userType").val()  
             };
             ctDAO.addUserType(param, function(data){
                 if(data && data.responseStatus == bmpUtil.RESPONSE_STATUS)
