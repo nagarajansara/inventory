@@ -4,7 +4,9 @@
  */
 package com.saratech.enginee.auth.service;
 
+import com.saratech.enginee.auth.model.Login;
 import java.sql.SQLException;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,5 +16,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface SessionService {
 
-    String getLogin(String userName, String password) throws SQLException;
+    List<Login> getLogin(String userName, String password) throws SQLException;
 }

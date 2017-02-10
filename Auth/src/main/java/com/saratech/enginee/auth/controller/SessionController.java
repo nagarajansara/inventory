@@ -8,8 +8,8 @@ import com.saratech.enginee.auth.model.Login;
 import com.saratech.enginee.auth.service.SessionService;
 import com.saratech.enginee.util.exception.ConstException;
 import java.sql.SQLException;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,14 +23,11 @@ public class SessionController extends BaseController {
     @Autowired
     SessionService sessionService;
 
-    public String getLogin(HttpServletRequest request, String userName, String password) throws SQLException, Exception {
+    public List<Login> getLogin(HttpServletRequest request, String userName, String password) throws SQLException, Exception {
         try {
-            String loginResponse = sessionService.getLogin(userName, password);
-            JSONObject jSONObject = new JSONObject(loginResponse);
-            if (jSONObject.has("sessionId")) {
-                Login login = new Login(jSONObject.getString("sessionId"),
-                        jSONObject.getInt("userId"));
-                setUserSession(request, login);
+            List<Login> loginResponse = sessionService.getLogin(userName, password);
+            if (loginResponse != null && loginResponse.size() > 0) {
+                setUserSession(request, loginResponse.get(0));
                 return loginResponse;
             } else {
                 throw new ConstException(ConstException.ERR_CODE_INVALID_LOGIN,

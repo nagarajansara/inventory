@@ -4,8 +4,11 @@
  */
 package com.saratech.enginee.util.Utilities;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.saratech.enginee.util.exception.ConstException;
 import com.saratech.enginee.util.response.Response;
+import java.io.IOException;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -29,7 +32,8 @@ public class Utilities {
     }
 
     public static void setErrResponse(Exception ex, Response response) {
-        if (ex instanceof java.sql.SQLException) {
+        if (ex instanceof java.sql.SQLException
+                || ex instanceof org.springframework.jdbc.BadSqlGrammarException) {
             response.setResponseMsg(ex.getMessage());
             response.setResponseStatus(ConstException.ERR_CODE_DB_ERROR);
         } else if (ex instanceof java.lang.NullPointerException) {
@@ -49,5 +53,15 @@ public class Utilities {
         ConstException constException = (ConstException) ex;
         response.setResponseMsg(constException.getMessage());
         response.setResponseStatus(constException.getCode());
+    }
+
+    public static int getStartIdx(int startIndx, int maxIndx) {
+        return (startIndx * maxIndx);
+    }
+
+    public static Map<String, Object> getConvertJSON_Pojo(String body) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> map = mapper.readValue(body, Map.class);
+        return map;
     }
 }

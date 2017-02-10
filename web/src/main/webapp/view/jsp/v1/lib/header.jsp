@@ -52,7 +52,7 @@
         <style>
             .hfmsDelBtn, .hfmsDelWorker
             {
-                display :none !important;
+                
             }
         </style>
     </head>

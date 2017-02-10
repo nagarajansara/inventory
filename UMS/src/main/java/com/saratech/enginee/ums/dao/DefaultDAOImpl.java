@@ -34,7 +34,6 @@ public class DefaultDAOImpl implements RowMapper {
                 JSONObject obj = new JSONObject();
                 for (int i = 1; i < numColumns + 1; i++) {
                     String columnName = resultSetMetaData.getColumnLabel(i);
-                    LoggerUtil.getDebugLog().debug("columnName = " + numColumns);
                     if (resultSetMetaData.getColumnType(i) == java.sql.Types.ARRAY) {
                         obj.put(columnName, resultSet.getArray(i));
                     } else if (resultSetMetaData.getColumnType(i) == java.sql.Types.BIGINT) {

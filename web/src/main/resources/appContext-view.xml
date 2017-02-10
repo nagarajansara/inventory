@@ -13,39 +13,9 @@
     <context:annotation-config />
     <!-- If no extension matched, use JSP view -->
     
-    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
-        <property name="order" value="1" />
-        <property name="mediaTypes">
-            <map>
-                <entry key="json" value="application/json" />
-            </map>
-        </property>
-
-        <property name="defaultViews">
-            <list>
-                <!-- JSON View -->
-                <bean
-                    class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
-                </bean>
-            </list>
-        </property>
-        <property name="ignoreAcceptHeader" value="true" />
-
-    </bean>
-    
-    
-    <bean
-        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="order" value="2" />
-        <property name="prefix">
-            <value>/view/jsp/v1/</value>
-        </property>
-        <property name="suffix">
-            <value>.jsp</value>
-        </property>
-    </bean>
-
-
+    <!-- JSON Support -->
+    <bean name="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
+    <bean name="jsonTemplate" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
 </beans>
 
 

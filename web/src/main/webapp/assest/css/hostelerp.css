@@ -49,3 +49,7 @@
 .pkDataCommonTable   td:last-child {
 	text-align: center;
 }
+.iv_AddUserTypeFrm, .iv_UpdateUserType
+{
+    display: none;
+}

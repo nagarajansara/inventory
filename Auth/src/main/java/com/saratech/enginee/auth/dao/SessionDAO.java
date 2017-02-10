@@ -4,7 +4,9 @@
  */
 package com.saratech.enginee.auth.dao;
 
+import com.saratech.enginee.auth.model.Login;
 import java.sql.SQLException;
+import java.util.List;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,5 +16,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SessionDAO {
 
-    String getLogin(String userName, String password) throws SQLException;
+    List<Login> getLogin(String userName, String password) throws SQLException;
 }

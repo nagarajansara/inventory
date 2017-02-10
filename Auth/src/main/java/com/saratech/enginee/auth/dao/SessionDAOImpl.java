@@ -4,9 +4,11 @@
  */
 package com.saratech.enginee.auth.dao;
 
+import com.saratech.enginee.auth.model.Login;
 import com.saratech.enginee.util.Logger.LoggerUtil;
 import com.saratech.enginee.util.Utilities.Utilities;
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,12 +30,13 @@ public class SessionDAOImpl implements SessionDAO, DAOConstants {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
-    final String LOGIN_VALIDATION_SPN = "loginValidation";
-    final String ADD_SESSION_SPN = "insertSession";
+    final String LOGIN_VALIDATION_SPN = "c_login_get";
+    final String ADD_SESSION_SPN = "c_session_post";
 
     @Override
-    public String getLogin(String userName, String password) {
+    public List<Login> getLogin(String userName, String password) {
         LoggerUtil.getDebugLog().debug("<< SessionDAOImpl process start >>");
+        List<Login> login = new ArrayList<Login>();
         StoredProcedureCall storedProcedureCall =
                 new StoredProcedureCall(jdbcTemplate, LOGIN_VALIDATION_SPN);
         RowMapper rowMapper = new DefaultDAOImpl();
@@ -48,7 +51,6 @@ public class SessionDAOImpl implements SessionDAO, DAOConstants {
         Map storedProcResult = storedProcedureCall.execute(hMap);
         List userList = (List) storedProcResult.get(RESULT_LIST_PC);
         LoggerUtil.getDebugLog().debug(this.getClass().getName() + " userList = " + userList);
-        JSONObject sessionJSON = new JSONObject();
         if (!userList.isEmpty()) {
             JSONObject jSONObject = new JSONObject(userList.get(0).toString());
             LoggerUtil.getDebugLog().debug(this.getClass().getName() + " userList = " + userList.get(0));
@@ -62,12 +64,12 @@ public class SessionDAOImpl implements SessionDAO, DAOConstants {
                 LoggerUtil.getDebugLog().debug(this.getClass().getName() + " apiKey = " + apiKey);
                 LoggerUtil.getDebugLog().debug(this.getClass().getName() + " userId = " + userId);
                 _addSession(userId, apiKey);
-                sessionJSON.put("sessionId", apiKey);
-                sessionJSON.put("userId", userId);
+                Login temp = new Login(apiKey, userId);
+                login.add(temp);
             }
             LoggerUtil.getDebugLog().debug("<< SessionDAOImpl process end >>");
         }
-        return sessionJSON.toString();
+        return login;
     }
 
     private void _addSession(int userId, String apiKey) {
@@ -85,5 +87,6 @@ public class SessionDAOImpl implements SessionDAO, DAOConstants {
         hMap.put("apikey", apiKey);
         Map storedProcResult = storedProcedureCall.execute(hMap);
         storedProcResult.get(RESULT_LIST_PC);
+        LoggerUtil.getDebugLog().debug("<< SessionDAOImpl addSession process end >>");
     }
 }

@@ -4,6 +4,7 @@ function BmpUtil()
 	this.RESPONSE_STATUS = 200;
 	this.RESPONSE_MSG = "Success";
 	this.INVALID_LOGIN_STATUS = 3;
+        
 };
 BmpUtil.prototype.isTextFieldEmpty = function(jqSelector)
 {

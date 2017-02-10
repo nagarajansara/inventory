@@ -15,9 +15,11 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Location name</th>
-                                    <th>Location type<th>
+                                    <th>Location type</th>
                                     <th>Phone</th>
                                     <th>Email</th>
+                                    <th>Address</th>
+                                    <th>Manage</th>
                                 </tr>
                             </thead>
                         </table>
@@ -38,6 +40,14 @@
                         <div class="position-center">
                             <form role="form" class="hrfsSubmitCollegeForm"
                                   data-parsley-validate="">
+                                <div class="form-group">
+                                    <label for="inputSuccess">Location Type</label>
+                                    <select class="form-control locationTypeName hfmsCommonRoomSelectize" placeholder="Select Location Type" data-parsley-required id="locationType"></select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputSuccess">Parent Location</label>
+                                    <select class="form-control parentLocationName hfmsCommonRoomSelectize" placeholder="Select parent location" data-parsley-required id="parentLocation"></select>
+                                </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Location Name</label> <input
                                         type="text" class="form-control hfmsCollegeName"
@@ -116,13 +126,72 @@
 <script src="${baseURL}/assest/plugin/getjsonparams.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
+        
+        var aoColumns = [ {
+                "mData" : "slNo",
+                'bSortable' : false
+            },
+            {
+                "mData" : "location_name",
+                'bSortable' : false
+            },
+            {
+                "mData" : "location_type",
+                'bSortable' : false
+            },
+            {
+                "mData" : "phone",
+                'bSortable' : false
+            },
+            {
+                "mData" : "email",
+                'bSortable' : false
+            },
+            {
+                "mData" : "address",
+                'bSortable' : false
+            },
+            {
+                "mData" : "editBtn",
+                'bSortable' : false
+            }, ];
+        
+        hfmsSetDataTableValues("#dynamic-table", "http://" + location.host + "${baseURL}/api/config/getorgdetails.json", aoColumns, 'User Type');
+        
+        ctDAO.getUserType("", "http://localhost:8082/inventory/api/config/getlocationtype.json", function(data){
+            //console.log('data.aaData : ',data.aaData);
+            var arrObj=data.aaData;
+            for (var i = 0; i < arrObj.length; i++) {
+                var obj=arrObj[i];
+                $('#locationType').append(new Option(obj.locationTypeName,obj.id));
+            }  
+        });
+        
+        $('.locationTypeName').on('change', function() {
+            var locationTpeId = $(this).val();
+            ctDAO.getUserType("", "http://localhost:8082/inventory/api/config/getlocationdetails.json?locationtypeid="+locationTpeId, function(data){
+                var arrObj=data.locationDetails;
+                for (var i = 0; i < arrObj.length; i++) {
+                    var obj=arrObj[i];
+                    $('#parentLocation').append(new Option(obj.locationName,obj.id));
+                }  
+            });
+        });
+        
         $(".iv_Config a").trigger("click");
-        $(".iv_AddUserType").submit(function(event) {
+        $(".hrfsSubmitCollegeForm").submit(function(event) {
             event.preventDefault();
             var param = {
-              "usertype": $(".iv_userType").val()  
+                "parent_id": $(".hfmsMobileNo").val(),
+                "location_name": $(".hfmsMobileNo").val(),
+                "location_type_id": $(".hfmsMobileNo").val(),
+                "phone": $(".hfmsMobileNo").val(),
+                "email": $(".hfmsMobileNo").val(),
+                "address": $(".hfmsMobileNo").val()  
             };
-            ctDAO.addUserType(param, function(data){
+            alert('1'+param);
+            ctDAO.addOrgDetails(param, function(data){
+            alert('2');
                 if(data && data.responseStatus == bmpUtil.RESPONSE_STATUS)
                 {
                     alert("Success");
